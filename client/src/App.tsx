@@ -1,11 +1,6 @@
-import { Logo } from 'components';
+import { Logo } from "components";
+import React from "react";
 
-const App = () => (
-
-
-  
-    <Logo />
-    
-  )
+const App = () => <Logo />;
 
 export default App;
