@@ -29,6 +29,10 @@
     ],
     "rules": {
         "@typescript-eslint/ban-types": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "prettier/prettier":[
+            "error",
+            {"endOfLine": "auto"}
+        ]
     }
 }
