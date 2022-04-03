@@ -1,6 +1,6 @@
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
-import { getRequests } from "serives/api/getRequests";
+import { getRequests } from "services/api/getRequests";
 import STATUSES from "constants/statuses";
 
 const initialState: IGlobalStore = {
