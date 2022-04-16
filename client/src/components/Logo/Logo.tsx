@@ -1,12 +1,7 @@
 import classes from "./Logo.module.scss";
 import React from "react";
+import { ReactComponent as LogoIcon } from "assets/icons/invoice-icon.svg";
 
-const Logo = () => (
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BMW_logo_%28gray%29.svg/2048px-BMW_logo_%28gray%29.svg.png"
-    alt="Logo"
-    className={classes.logo}
-  />
-);
+const Logo = () => <LogoIcon className={classes.logo} />;
 
 export default Logo;

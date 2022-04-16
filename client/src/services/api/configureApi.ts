@@ -6,7 +6,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    console.log("Intercepted at request");
+    console.log("Intercepted at request", config);
     return config;
   },
   (error) => {
@@ -17,7 +17,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    console.log("Intercepted at response");
+    console.log("Intercepted at response", response);
     return response;
   },
   (error) => {
