@@ -4,6 +4,8 @@ const COLORS = {
   TRETIARY: "#5CE6B8",
   ACCENT: "#3DCCB4",
   WHITE: "#FFFFFF",
+  BLACK: "#000000",
+  WARNING: "#CC3300",
   LIGHTGRAY: "#F3F3F3",
 };
 

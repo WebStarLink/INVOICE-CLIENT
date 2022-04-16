@@ -1,6 +1,10 @@
 import {
   AppBar,
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   Divider,
   IconButton,
   ListItemIcon,
@@ -17,15 +21,16 @@ import { ReactComponent as CreateInvoiceIcon } from "assets/icons/create-invoice
 import { ReactComponent as CreateContractIcon } from "assets/icons/create-contract.svg";
 import { ReactComponent as MyProfileIcon } from "assets/icons/my-profile.svg";
 import { ReactComponent as LogoutIcon } from "assets/icons/logout.svg";
-import React from "react";
+import React, { useState } from "react";
 import COLORS from "constants/colors";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "constants/routes";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [controlMenu, setControlMenu] = React.useState<null | HTMLElement>(null);
-  const [accountMenu, setAccountMenu] = React.useState<null | HTMLElement>(null);
+  const [controlMenu, setControlMenu] = useState<null | HTMLElement>(null);
+  const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
   const handleOpenControlMenu = (event: React.MouseEvent<HTMLElement>) => {
     setControlMenu(event.currentTarget);
@@ -64,6 +69,14 @@ const Header = () => {
   const handleProfileNavigate = () => {
     handleCloseAccountMenu();
     navigate(ROUTES.PROFILE);
+  };
+
+  const handleOpenConfirmLogout = () => {
+    handleCloseAccountMenu();
+    setOpenConfirmModal(true);
+  };
+  const handleCloseConfirmLogout = () => {
+    setOpenConfirmModal(false);
   };
 
   return (
@@ -145,7 +158,7 @@ const Header = () => {
               </ListItemIcon>
               My Profile
             </MenuItem>
-            <MenuItem onClick={handleCloseAccountMenu}>
+            <MenuItem onClick={handleOpenConfirmLogout}>
               <ListItemIcon>
                 <LogoutIcon width={20} height={20} />
               </ListItemIcon>
@@ -154,6 +167,37 @@ const Header = () => {
           </Menu>
         </Toolbar>
       </AppBar>
+      <Dialog
+        open={openConfirmModal}
+        onClose={handleCloseConfirmLogout}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>{"Do you want logout?"}</DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={handleCloseConfirmLogout}
+            sx={{
+              color: COLORS.PRIMARY,
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleCloseConfirmLogout}
+            autoFocus
+            sx={{
+              color: COLORS.WHITE,
+              background: COLORS.PRIMARY,
+              ":hover": {
+                color: COLORS.PRIMARY,
+              },
+            }}
+          >
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
