@@ -19,23 +19,51 @@ import { ReactComponent as MyProfileIcon } from "assets/icons/my-profile.svg";
 import { ReactComponent as LogoutIcon } from "assets/icons/logout.svg";
 import React from "react";
 import COLORS from "constants/colors";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "constants/routes";
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+  const [controlMenu, setControlMenu] = React.useState<null | HTMLElement>(null);
+  const [accountMenu, setAccountMenu] = React.useState<null | HTMLElement>(null);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpenControlMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setControlMenu(event.currentTarget);
   };
-  const handleAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl2(event.currentTarget);
+  const handleOpenAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAccountMenu(event.currentTarget);
   };
 
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
+  const handleCloseControlMenu = () => {
+    setControlMenu(null);
   };
   const handleCloseAccountMenu = () => {
-    setAnchorEl2(null);
+    setAccountMenu(null);
+  };
+
+  const handleLogoNavigate = () => {
+    navigate("/");
+  };
+
+  const handleAddNewClientNavigate = () => {
+    handleCloseControlMenu();
+    navigate(ROUTES.ADD_CLIENT);
+  };
+  const handleAddManageClientsNavigate = () => {
+    handleCloseControlMenu();
+    navigate(ROUTES.CLIENTS);
+  };
+  const handleCreateInvoiceNavigate = () => {
+    handleCloseControlMenu();
+    navigate(ROUTES.ADD_INVOICE);
+  };
+  const handleCreateContractNavigate = () => {
+    handleCloseControlMenu();
+    navigate(ROUTES.ADD_CONTRACT);
+  };
+  const handleProfileNavigate = () => {
+    handleCloseAccountMenu();
+    navigate(ROUTES.PROFILE);
   };
 
   return (
@@ -47,12 +75,12 @@ const Header = () => {
             background: COLORS.LIGHTGRAY,
           }}
         >
-          <IconButton sx={{ color: COLORS.PRIMARY }} onClick={handleAccountMenu}>
+          <IconButton sx={{ color: COLORS.PRIMARY }} onClick={handleOpenControlMenu}>
             <MenuIcon width={"1.6rem"} height={"1.6rem"} fill={COLORS.PRIMARY} />
           </IconButton>
           <Menu
             id="menu-appbar"
-            anchorEl={anchorEl2}
+            anchorEl={controlMenu}
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
@@ -62,69 +90,68 @@ const Header = () => {
               vertical: "top",
               horizontal: "right",
             }}
-            open={Boolean(anchorEl2)}
-            onClose={handleCloseAccountMenu}
+            open={Boolean(controlMenu)}
+            onClose={handleCloseControlMenu}
           >
-            <MenuItem onClick={handleCloseAccountMenu}>
+            <MenuItem onClick={handleAddNewClientNavigate}>
               <ListItemIcon>
                 <AddNewClientIcon width={20} height={20} />
               </ListItemIcon>
               Add new client
             </MenuItem>
-            <MenuItem onClick={handleCloseAccountMenu}>
+            <MenuItem onClick={handleAddManageClientsNavigate}>
               <ListItemIcon>
                 <ManageClientsIcon width={20} height={20} />
               </ListItemIcon>
               Manage clients
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleCloseAccountMenu}>
+            <MenuItem onClick={handleCreateInvoiceNavigate}>
               <ListItemIcon>
                 <CreateInvoiceIcon width={20} height={20} />
               </ListItemIcon>
               Create invoice
             </MenuItem>
-            <MenuItem onClick={handleCloseAccountMenu}>
+            <MenuItem onClick={handleCreateContractNavigate}>
               <ListItemIcon>
                 <CreateContractIcon width={20} height={20} />
               </ListItemIcon>
               Create contract
             </MenuItem>
           </Menu>
-          <Logo />
-          <div>
-            <IconButton onClick={handleMenu}>
-              <MenuAccountIcon width={"1.6rem"} height={"1.6rem"} fill={COLORS.PRIMARY} />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleCloseMenu}
-            >
-              <MenuItem onClick={handleCloseMenu}>
-                <ListItemIcon>
-                  <MyProfileIcon width={20} height={20} />
-                </ListItemIcon>
-                My Profile
-              </MenuItem>
-              <MenuItem onClick={handleCloseMenu}>
-                <ListItemIcon>
-                  <LogoutIcon width={20} height={20} />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
-          </div>
+          <Logo onClick={handleLogoNavigate} />
+
+          <IconButton onClick={handleOpenAccountMenu}>
+            <MenuAccountIcon width={"1.6rem"} height={"1.6rem"} fill={COLORS.PRIMARY} />
+          </IconButton>
+          <Menu
+            id="menu-profilebar"
+            anchorEl={accountMenu}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(accountMenu)}
+            onClose={handleCloseAccountMenu}
+          >
+            <MenuItem onClick={handleProfileNavigate}>
+              <ListItemIcon>
+                <MyProfileIcon width={20} height={20} />
+              </ListItemIcon>
+              My Profile
+            </MenuItem>
+            <MenuItem onClick={handleCloseAccountMenu}>
+              <ListItemIcon>
+                <LogoutIcon width={20} height={20} />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Box>
