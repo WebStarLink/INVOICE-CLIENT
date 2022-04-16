@@ -72,6 +72,7 @@ const Header = () => {
   };
 
   const handleOpenConfirmLogout = () => {
+    handleCloseAccountMenu();
     setOpenConfirmModal(true);
   };
   const handleCloseConfirmLogout = () => {
@@ -172,24 +173,28 @@ const Header = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle>{"Are you sure you want to Logout?"}</DialogTitle>
+        <DialogTitle>{"Do you want logout?"}</DialogTitle>
         <DialogActions>
           <Button
             onClick={handleCloseConfirmLogout}
             sx={{
-              color: COLORS.WARNING,
+              color: COLORS.PRIMARY,
             }}
           >
-            Disagree
+            Cancel
           </Button>
           <Button
             onClick={handleCloseConfirmLogout}
             autoFocus
             sx={{
-              color: COLORS.PRIMARY,
+              color: COLORS.WHITE,
+              background: COLORS.PRIMARY,
+              ":hover": {
+                color: COLORS.PRIMARY,
+              },
             }}
           >
-            Agree
+            Logout
           </Button>
         </DialogActions>
       </Dialog>
