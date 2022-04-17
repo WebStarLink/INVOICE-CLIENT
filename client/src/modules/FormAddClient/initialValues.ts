@@ -1,5 +1,13 @@
 export const initialValues = {
-  name: "",
+  legal: "",
+  itn: "",
+  address: "",
+  iban: "",
+  bank: "",
+  bic: "",
+  noticea: "",
+  noticeb: "",
+  contract: "",
+  contractdate: "",
   phone: "",
-  unp: "",
 };

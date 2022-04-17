@@ -19,9 +19,13 @@ export const inputStyles = {
 };
 
 export const inputLabelStyles = {
-  top: "-7px",
+  top: "-8px",
   "&.Mui-focused": {
     color: COLORS.PRIMARY,
+    transform: "translate(14px, -2px) scale(0.75)",
+  },
+  "&.MuiInputLabel-shrink": {
+    transform: "translate(14px, 0px) scale(0.75)",
   },
   "&.Mui-error": {
     color: COLORS.WARNING,
@@ -38,4 +42,22 @@ export const buttonStyles = {
   "&:hover": {
     color: COLORS.PRIMARY,
   },
+};
+
+export const inputDateStyles = {
+  input: {
+    padding: "9px 14px",
+  },
+  //   "&.MuiOutlinedInput-root": {
+  //     "&.Mui-focused": {
+  //       fieldset: {
+  //         borderColor: COLORS.PRIMARY,
+  //       },
+  //     },
+  //     "&.Mui-error": {
+  //       fieldset: {
+  //         borderColor: COLORS.WARNING,
+  //       },
+  //     },
+  //   },
 };

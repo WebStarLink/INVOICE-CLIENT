@@ -1,7 +1,15 @@
 export interface IValues {
-  name: string;
+  legal: string;
+  itn: number | string;
+  address: string;
+  iban: string;
+  bank: string;
+  bic: string;
+  noticea: string;
+  noticeb: string;
+  contract: string;
+  contractdate: string;
   phone: string;
-  unp: string;
 }
 export interface IForm {
   values: IValues;
