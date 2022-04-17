@@ -1,0 +1,28 @@
+@import "styles/colors.scss";
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    background: $gray;
+    padding: 2rem;
+    border-radius: 1rem;
+    position: relative;
+}
+.animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background: $gray;
+    border-radius: 1rem;
+}
+.buttonContainer {
+    display: flex;
+    .button {
+        width: 50%;
+    }
+}
