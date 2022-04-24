@@ -8,7 +8,7 @@ export interface IValues {
   noticea: string;
   noticeb: string;
   contract: string;
-  contractdate: string;
+  contractdate: Date;
   phone: string;
 }
 export interface IForm {

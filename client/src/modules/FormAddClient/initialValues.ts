@@ -8,6 +8,6 @@ export const initialValues = {
   noticea: "",
   noticeb: "",
   contract: "",
-  contractdate: "",
+  contractdate: new Date(Date.now()),
   phone: "",
 };

@@ -5,12 +5,11 @@ import { Button, TextField } from "@mui/material";
 import classes from "./FormAddClient.module.scss";
 import {
   buttonStyles,
-  //   inputDateStyles,
+  calendarStyles,
   inputErrorStyles,
   inputLabelStyles,
   inputStyles,
 } from "./styles";
-import { initialValues } from "./initialValues";
 import lottie from "lottie-web";
 import LottieSaveAnimation from "assets/lottie/saved-animation.json";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +17,7 @@ import { VALIDATION_SCHEMA } from "constants/validation";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { initialValues } from "./initialValues";
 
 const FormAddClient = () => {
   const element = useRef<HTMLDivElement>(null);
@@ -113,6 +113,7 @@ const FormAddClient = () => {
                 id="itn"
                 name="itn"
                 label="TAX"
+                inputMode="numeric"
                 placeholder="Organization TAX number"
                 value={values.itn}
                 helperText={touched.itn && errors.itn}
@@ -292,13 +293,22 @@ const FormAddClient = () => {
                   label="Contract date"
                   inputFormat="dd/MM/yyyy"
                   onChange={(value) => {
-                    value && setFieldValue("contractdate", value);
-                    console.log(value);
+                    value && setFieldValue("contractdate", value.toString());
+                    console.log(values.contractdate);
                   }}
                   value={values.contractdate}
+                  PaperProps={{
+                    sx: calendarStyles,
+                  }}
+                  InputAdornmentProps={{
+                    sx: {
+                      marginLeft: "0",
+                    },
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      className={classes.datepicker}
                       id="contractdate"
                       name={"contractdate"}
                       helperText={touched.contractdate && errors.contractdate}
@@ -310,9 +320,6 @@ const FormAddClient = () => {
                       FormHelperTextProps={{
                         sx: inputErrorStyles,
                       }}
-                      //   InputProps={{
-                      //     sx: inputDateStyles,
-                      //   }}
                       sx={{
                         marginBottom: "1rem",
                         width: "calc(50% - 5px)",

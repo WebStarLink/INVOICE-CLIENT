@@ -44,20 +44,10 @@ export const buttonStyles = {
   },
 };
 
-export const inputDateStyles = {
-  input: {
-    padding: "9px 14px",
+export const calendarStyles = {
+  button: {
+    "&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:focus": {
+      background: COLORS.PRIMARY,
+    },
   },
-  //   "&.MuiOutlinedInput-root": {
-  //     "&.Mui-focused": {
-  //       fieldset: {
-  //         borderColor: COLORS.PRIMARY,
-  //       },
-  //     },
-  //     "&.Mui-error": {
-  //       fieldset: {
-  //         borderColor: COLORS.WARNING,
-  //       },
-  //     },
-  //   },
 };
