@@ -1,6 +1,6 @@
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
-import { getRequests } from "services/api/getRequests";
+import { postRequests } from "services/api/postRequests";
 import STATUSES from "constants/statuses";
 
 const initialState: IGlobalStore = {
@@ -11,13 +11,9 @@ const initialState: IGlobalStore = {
   error: "",
 };
 
-export const getFakeData = createAsyncThunk("owner/getFakeData", async () => {
-  try {
-    const response = await getRequests.getTestData();
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+export const authLogin = createAsyncThunk("auth/login", async (body: {}) => {
+  const response = await postRequests.login(body);
+  return response.data;
 });
 
 export const globalResponseSlice = createSlice({
@@ -29,19 +25,18 @@ export const globalResponseSlice = createSlice({
     },
     setErrorMessage(state, action) {
       state.error = action.payload;
-      state.status = "DONE";
     },
   },
 
   extraReducers: (builder) => {
-    builder.addCase(getFakeData.pending, (state) => {
+    builder.addCase(authLogin.pending, (state) => {
       state.status = STATUSES.LOADING;
     });
-    builder.addCase(getFakeData.fulfilled, (state, action) => {
+    builder.addCase(authLogin.fulfilled, (state, action) => {
       state.owner = action.payload;
       state.status = STATUSES.DONE;
     });
-    builder.addCase(getFakeData.rejected, (state, action) => {
+    builder.addCase(authLogin.rejected, (state, action) => {
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
