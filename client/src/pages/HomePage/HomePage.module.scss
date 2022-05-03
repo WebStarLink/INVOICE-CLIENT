@@ -1,0 +1,12 @@
+@import "styles/colors";
+@import "styles/media";
+
+.wrapper {
+    padding: 2rem 20%;
+    @include tablet {
+        padding: 2rem 10%;
+    }
+    @include mobile {
+        padding: 1rem;
+    }
+}
