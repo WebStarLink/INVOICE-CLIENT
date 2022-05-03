@@ -28,7 +28,7 @@ export const VALIDATION_SCHEMA = Yup.object().shape({
 });
 
 export const AUTH_VALIDATION_SCHEMA = Yup.object().shape({
-  email: Yup.string().email().required("Required"),
+  email: Yup.string().email("This is not correct email").required("Required"),
   password: Yup.string()
     .required("Required")
     .min(4, "Password should be minimum 4 symbols")

@@ -43,7 +43,7 @@ class UserService {
         }
         const compairingPasssword = await bcrypt.compare(password, user.password)
         if (!compairingPasssword) {
-            throw ApiError.BadRequest(`Incorrect password`)
+            throw ApiError.BadRequest(`Incorrect password for user ${email}`)
         }
 
         const userDto = new UserDto(user)
