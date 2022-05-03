@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "http://localhost:5050/api/",
 });
 
 instance.interceptors.request.use(
@@ -11,7 +11,7 @@ instance.interceptors.request.use(
   },
   (error) => {
     console.log("Intercepted at request error");
-    return Promise.reject(error);
+    return Promise.reject(error.response.data);
   }
 );
 
@@ -21,7 +21,6 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log("Intercepted at response error");
-    return Promise.reject(error);
+    return Promise.reject(error.response.data);
   }
 );

@@ -26,3 +26,11 @@ export const VALIDATION_SCHEMA = Yup.object().shape({
     .max(13, "Maximum 13 symbols")
     .required("Required"),
 });
+
+export const AUTH_VALIDATION_SCHEMA = Yup.object().shape({
+  email: Yup.string().email().required("Required"),
+  password: Yup.string()
+    .required("Required")
+    .min(4, "Password should be minimum 4 symbols")
+    .max(32, "Password should be maximum 32 symbols"),
+});
