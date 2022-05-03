@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { loadingStatusSelector, getFakeData, globalResponseSelector } from "store/global";
 import { useSelector, useDispatch } from "react-redux";
+import classes from "./HomePage.module.scss";
 
 const HomePage = () => {
   const loadingStatus = useSelector(loadingStatusSelector);
@@ -17,7 +18,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div className={classes.wrapper}>
       <h1>HomePage</h1>
       {loadingStatus !== STATUSES.DONE ? (
         <Box sx={{ display: "flex" }}>
@@ -26,7 +27,7 @@ const HomePage = () => {
       ) : (
         <p>{JSON.stringify(fakeData)}</p>
       )}
-    </>
+    </div>
   );
 };
 export default HomePage;
