@@ -7,17 +7,19 @@ import { buttonStyles, inputErrorStyles, inputLabelStyles, inputStyles } from ".
 import { AUTH_VALIDATION_SCHEMA } from "constants/validation";
 import { initialValues } from "./initialValues";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogin, errorMessageSelector } from "store/global";
+import { authLogin, errorMessageSelector, setErrorMessage } from "store/global";
 
 const FormAuthorization = () => {
   const dispatch = useDispatch();
   const errorMessages = useSelector(errorMessageSelector);
+  const clearErrors = () => {
+    dispatch(setErrorMessage(""));
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={async (values: IValues) => {
-        console.log(values);
         await dispatch(authLogin(values));
       }}
       validateOnBlur
@@ -34,9 +36,16 @@ const FormAuthorization = () => {
                 label="E-Mail"
                 placeholder="Enter your email"
                 value={values.email}
-                helperText={touched.email && errors.email}
-                error={(Boolean(touched.email) && Boolean(errors.email)) || Boolean(errorMessages)}
+                helperText={
+                  (touched.email && errors.email) ||
+                  (errorMessages?.includes("email") && errorMessages)
+                }
+                error={
+                  (Boolean(touched.email) && Boolean(errors.email)) ||
+                  Boolean(errorMessages?.includes("email"))
+                }
                 onChange={handleChange}
+                onInput={clearErrors}
                 disabled={isSubmitting}
                 InputProps={{
                   sx: inputStyles,
@@ -54,15 +63,21 @@ const FormAuthorization = () => {
               <TextField
                 fullWidth
                 id="password"
+                type={"password"}
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
                 value={values.password}
-                helperText={touched.password && errors.password}
+                helperText={
+                  (touched.password && errors.password) ||
+                  (errorMessages?.includes("password") && errorMessages)
+                }
                 error={
-                  (Boolean(touched.password) && Boolean(errors.password)) || Boolean(errorMessages)
+                  (Boolean(touched.password) && Boolean(errors.password)) ||
+                  Boolean(errorMessages?.includes("password"))
                 }
                 onChange={handleChange}
+                onInput={clearErrors}
                 disabled={isSubmitting}
                 InputProps={{
                   sx: inputStyles,
