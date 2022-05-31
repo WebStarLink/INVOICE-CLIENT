@@ -31,7 +31,7 @@ class UserService {
         if (!user) {
             throw ApiError.BadRequest("Activation link uncorrect")
         }
-        user.activationLink = true
+        user.activationSuccessful = true
         await user.save()
     }
 
