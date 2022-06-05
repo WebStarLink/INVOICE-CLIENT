@@ -3,7 +3,7 @@ import classes from "./AddInvoicePage.module.scss";
 
 const AddInvoicePage = () => (
   <div className={classes.wrapper}>
-    <h1>Add Invoice</h1>;
+    <h1>Add Invoice</h1>
   </div>
 );
 
