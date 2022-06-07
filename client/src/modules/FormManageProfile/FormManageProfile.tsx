@@ -11,7 +11,7 @@ import { putRequests } from "services/api/putRequests";
 import { useSelector } from "react-redux";
 import { userResponseSelector } from "store/global";
 
-const FormAddClient = () => {
+const FormManageProfile = () => {
   const user = useSelector(userResponseSelector);
 
   return (
@@ -96,4 +96,4 @@ const FormAddClient = () => {
   );
 };
 
-export default FormAddClient;
+export default FormManageProfile;
