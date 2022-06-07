@@ -1,18 +1,32 @@
+import { getRequests } from "services/api/getRequests";
+import { IUser } from "interfaces";
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
 import { postRequests } from "services/api/postRequests";
 import STATUSES from "constants/statuses";
 
 const initialState: IGlobalStore = {
-  owner: [],
+  user: [],
   client: [],
   status: "",
   success: "",
   error: "",
 };
 
-export const authLogin = createAsyncThunk("auth/login", async (body: {}) => {
+export const authLogin = createAsyncThunk("auth/login", async (body: IUser) => {
   const response = await postRequests.login(body);
+  return response.data;
+});
+export const authRegistration = createAsyncThunk("auth/registration", async (body: IUser) => {
+  const response = await postRequests.registration(body);
+  return response.data;
+});
+export const authLogout = createAsyncThunk("auth/logout", async () => {
+  const response = await postRequests.logout();
+  return response.data;
+});
+export const getClients = createAsyncThunk("clients/getCluents", async () => {
+  const response = await getRequests.getUsers();
   return response.data;
 });
 
@@ -33,10 +47,46 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.LOADING;
     });
     builder.addCase(authLogin.fulfilled, (state, action) => {
-      state.owner = action.payload;
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.accessToken);
       state.status = STATUSES.DONE;
     });
     builder.addCase(authLogin.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+    builder.addCase(authLogout.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(authLogout.fulfilled, (state) => {
+      state.user = [];
+      localStorage.removeItem("token");
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(authLogout.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+    builder.addCase(authRegistration.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(authRegistration.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.accessToken);
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(authRegistration.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+    builder.addCase(getClients.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(getClients.fulfilled, (state, action) => {
+      state.client = action.payload;
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(getClients.rejected, (state, action) => {
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
@@ -49,7 +99,7 @@ const globalSelector = (state: IGlobalStoreSelector) => state.globalStore;
 
 export const globalResponseSelector = createDraftSafeSelector(
   globalSelector,
-  (global) => global.owner
+  (global) => global.user
 );
 export const loadingStatusSelector = createDraftSafeSelector(
   globalSelector,

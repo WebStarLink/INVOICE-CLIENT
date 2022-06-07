@@ -1,16 +1,18 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const instance = axios.create({
   baseURL: "http://localhost:5050/api/",
+  withCredentials: true,
 });
 
 instance.interceptors.request.use(
-  (config) => {
-    console.log("Intercepted at request", config);
+  (config: AxiosRequestConfig) => {
+    if (config.headers) {
+      config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+    }
     return config;
   },
   (error) => {
-    console.log("Intercepted at request error");
     return Promise.reject(error.response.data);
   }
 );

@@ -1,5 +1,5 @@
 export interface IGlobalStore {
-  owner: [];
+  user: [];
   client: [];
   status: string;
   success: string;
