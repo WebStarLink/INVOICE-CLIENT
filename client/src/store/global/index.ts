@@ -1,5 +1,5 @@
 import { getRequests } from "services/api/getRequests";
-import { IUser } from "interfaces";
+import { IAuth } from "interfaces";
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
 import { postRequests } from "services/api/postRequests";
@@ -14,7 +14,7 @@ const initialState: IGlobalStore = {
   error: "",
 };
 
-export const authLogin = createAsyncThunk("auth/login", async (body: IUser) => {
+export const authLogin = createAsyncThunk("auth/login", async (body: IAuth) => {
   const response = await postRequests.login(body);
   return response.data;
 });
@@ -22,7 +22,7 @@ export const authCheck = createAsyncThunk("auth/refresh", async () => {
   const response = await checkAuth.refreshToken();
   return response.data;
 });
-export const authRegistration = createAsyncThunk("auth/registration", async (body: IUser) => {
+export const authRegistration = createAsyncThunk("auth/registration", async (body: IAuth) => {
   const response = await postRequests.registration(body);
   return response.data;
 });
@@ -52,6 +52,8 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.LOADING;
     });
     builder.addCase(authLogin.fulfilled, (state, action) => {
+      console.log("AUTH LOGIN", action.payload);
+
       state.user = action.payload.user;
       localStorage.setItem("token", action.payload.accessToken);
       state.status = STATUSES.DONE;
@@ -100,7 +102,7 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.LOADING;
     });
     builder.addCase(getClients.fulfilled, (state, action) => {
-      state.client = action.payload;
+      state.client.push(action.payload);
       state.status = STATUSES.DONE;
     });
     builder.addCase(getClients.rejected, (state, action) => {

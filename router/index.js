@@ -10,6 +10,7 @@ body("password").isLength({min: 4, max: 32}),
 UserController.registration)
 routes.post('/login', UserController.login)
 routes.post('/logout', UserController.logout)
+routes.put('/profile', authMiddleware, UserController.profile)
 routes.get('/activate/:link', UserController.activate)
 routes.get('/refresh', UserController.refresh)
 routes.get('/users', authMiddleware, UserController.users)

@@ -5,6 +5,7 @@ const mailService = require("./mailService")
 const tokenService = require("./tokenService")
 const UserDto = require("../dtos/userDto")
 const ApiError = require("../exceptions/apiError")
+const { ObjectId } = require("mongodb")
 
 class UserService {
     async registration (email, password) {
@@ -75,9 +76,19 @@ class UserService {
         return {...tokens, user: userDto}
     }
 
-    async getAllUsers() {
-        const users = await UserModel.find()
+    async getAllUsers(id) {
+        console.log(id);
+        const users = await UserModel.findById({ _id: ObjectId(id) })
         return users
+    }
+
+    async updateProfile(id, data) {
+        const profile = await UserModel.updateOne({ _id: ObjectId(id) }, {$set: {"profile": data}})
+        if (!profile) {
+            throw ApiError.BadRequest("User not found")
+        }
+        const user = await UserModel.findById({ _id: ObjectId(id) })
+        return user
     }
 
 }
