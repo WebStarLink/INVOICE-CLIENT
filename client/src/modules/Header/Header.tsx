@@ -25,9 +25,12 @@ import React, { useState } from "react";
 import COLORS from "constants/colors";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "constants/routes";
+import { useDispatch } from "react-redux";
+import { authLogout } from "store/global";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [controlMenu, setControlMenu] = useState<null | HTMLElement>(null);
   const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -77,6 +80,10 @@ const Header = () => {
   };
   const handleCloseConfirmLogout = () => {
     setOpenConfirmModal(false);
+  };
+  const logoutHandler = async () => {
+    await dispatch(authLogout());
+    handleCloseConfirmLogout();
   };
 
   return (
@@ -184,7 +191,7 @@ const Header = () => {
             Cancel
           </Button>
           <Button
-            onClick={handleCloseConfirmLogout}
+            onClick={logoutHandler}
             autoFocus
             sx={{
               color: COLORS.WHITE,
