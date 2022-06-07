@@ -25,8 +25,8 @@ import React, { useState } from "react";
 import COLORS from "constants/colors";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "constants/routes";
-import { useDispatch } from "react-redux";
-import { authLogout } from "store/global";
+import { useDispatch, useSelector } from "react-redux";
+import { authLogout, userResponseSelector } from "store/global";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const Header = () => {
   const [controlMenu, setControlMenu] = useState<null | HTMLElement>(null);
   const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const user = useSelector(userResponseSelector);
 
   const handleOpenControlMenu = (event: React.MouseEvent<HTMLElement>) => {
     setControlMenu(event.currentTarget);
@@ -165,7 +166,7 @@ const Header = () => {
               </ListItemIcon>
               My Profile
             </MenuItem>
-            <MenuItem onClick={handleOpenConfirmLogout}>
+            <MenuItem onClick={handleOpenConfirmLogout} disabled={!user?.email}>
               <ListItemIcon>
                 <LogoutIcon width={20} height={20} />
               </ListItemIcon>
