@@ -9,7 +9,9 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(authCheck());
+    if (localStorage.getItem("token")) {
+      dispatch(authCheck());
+    }
   }, [dispatch]);
 
   return (
