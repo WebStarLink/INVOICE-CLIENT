@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className={classes.wrapper}>
       <h1>HomePage</h1>
-      {user?.email ? <h2>{user.email}</h2> : <FormAuthorization />}
+      {user ? <h2>{user.email}</h2> : <FormAuthorization />}
     </div>
   );
 };
