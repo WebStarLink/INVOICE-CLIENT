@@ -34,3 +34,8 @@ export const AUTH_VALIDATION_SCHEMA = Yup.object().shape({
     .min(4, "Password should be minimum 4 symbols")
     .max(32, "Password should be maximum 32 symbols"),
 });
+
+export const PROFILE_VALIDATION_SCHEMA = Yup.object().shape({
+  legal: Yup.string().required("Required"),
+  itn: Yup.string().required("Required").min(9, "Minimum 9 symbols").max(9, "Maximum 9 symbols"),
+});

@@ -5,6 +5,10 @@ const UserSchema = new Schema({
     password: {type: String, required: true},
     activationSuccessful: {type: Boolean, default: false},
     activationLink: {type: String},
+    profile: {
+        legal: {type: String},
+        itn: {type: String}
+    }
 })
 
 

@@ -1,8 +1,8 @@
-import { IUser } from "interfaces";
+import { IAuth } from "interfaces";
 import { instance } from "./configureApi";
 
 export const postRequests = {
-  login: (body: IUser) => instance.post("/login", body),
-  registration: (body: IUser) => instance.post("/registration", body),
+  login: (body: IAuth) => instance.post("/login", body),
+  registration: (body: IAuth) => instance.post("/registration", body),
   logout: () => instance.post("/logout"),
 };
