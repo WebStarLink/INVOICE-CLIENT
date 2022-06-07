@@ -10,9 +10,8 @@ const ProfilePage = () => {
   const clients = useSelector(clientResponseSelector);
 
   useEffect(() => {
-    console.log("selector", clients);
     dispatch(getClients());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={classes.wrapper}>

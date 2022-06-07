@@ -4,6 +4,7 @@ import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
 import { postRequests } from "services/api/postRequests";
 import STATUSES from "constants/statuses";
+import { checkAuth } from "services/api/configureApi";
 
 const initialState: IGlobalStore = {
   user: null,
@@ -18,7 +19,7 @@ export const authLogin = createAsyncThunk("auth/login", async (body: IUser) => {
   return response.data;
 });
 export const authCheck = createAsyncThunk("auth/refresh", async () => {
-  const response = await getRequests.checkAuth();
+  const response = await checkAuth.refreshToken();
   return response.data;
 });
 export const authRegistration = createAsyncThunk("auth/registration", async (body: IUser) => {
@@ -100,7 +101,6 @@ export const globalResponseSlice = createSlice({
     });
     builder.addCase(getClients.fulfilled, (state, action) => {
       state.client = action.payload;
-      console.log("State Clients", state.client);
       state.status = STATUSES.DONE;
     });
     builder.addCase(getClients.rejected, (state, action) => {
