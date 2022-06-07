@@ -1,5 +1,7 @@
+import { IUser } from "interfaces";
+
 export interface IGlobalStore {
-  user: [];
+  user: IUser | null;
   client: [];
   status: string;
   success: string;

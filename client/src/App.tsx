@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "modules";
 import "styles/global.scss";
 import AppRouter from "routes/AppRouter";
+import { useDispatch } from "react-redux";
+import { authCheck } from "store/global";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authCheck());
+  }, [dispatch]);
+
   return (
     <>
       <Header />

@@ -6,7 +6,7 @@ import { postRequests } from "services/api/postRequests";
 import STATUSES from "constants/statuses";
 
 const initialState: IGlobalStore = {
-  user: [],
+  user: null,
   client: [],
   status: "",
   success: "",
@@ -17,6 +17,10 @@ export const authLogin = createAsyncThunk("auth/login", async (body: IUser) => {
   const response = await postRequests.login(body);
   return response.data;
 });
+export const authCheck = createAsyncThunk("auth/refresh", async () => {
+  const response = await getRequests.checkAuth();
+  return response.data;
+});
 export const authRegistration = createAsyncThunk("auth/registration", async (body: IUser) => {
   const response = await postRequests.registration(body);
   return response.data;
@@ -25,7 +29,7 @@ export const authLogout = createAsyncThunk("auth/logout", async () => {
   const response = await postRequests.logout();
   return response.data;
 });
-export const getClients = createAsyncThunk("clients/getCluents", async () => {
+export const getClients = createAsyncThunk("clients/getClients", async () => {
   const response = await getRequests.getUsers();
   return response.data;
 });
@@ -55,11 +59,23 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
+    builder.addCase(authCheck.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(authCheck.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.accessToken);
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(authCheck.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
     builder.addCase(authLogout.pending, (state) => {
       state.status = STATUSES.LOADING;
     });
     builder.addCase(authLogout.fulfilled, (state) => {
-      state.user = [];
+      state.user = null;
       localStorage.removeItem("token");
       state.status = STATUSES.DONE;
     });
@@ -84,6 +100,7 @@ export const globalResponseSlice = createSlice({
     });
     builder.addCase(getClients.fulfilled, (state, action) => {
       state.client = action.payload;
+      console.log("State Clients", state.client);
       state.status = STATUSES.DONE;
     });
     builder.addCase(getClients.rejected, (state, action) => {
@@ -97,9 +114,13 @@ export const { setSuccessMessage, setErrorMessage } = globalResponseSlice.action
 
 const globalSelector = (state: IGlobalStoreSelector) => state.globalStore;
 
-export const globalResponseSelector = createDraftSafeSelector(
+export const userResponseSelector = createDraftSafeSelector(
   globalSelector,
   (global) => global.user
+);
+export const clientResponseSelector = createDraftSafeSelector(
+  globalSelector,
+  (global) => global.client
 );
 export const loadingStatusSelector = createDraftSafeSelector(
   globalSelector,
