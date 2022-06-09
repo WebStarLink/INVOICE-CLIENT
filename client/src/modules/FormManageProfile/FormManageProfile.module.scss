@@ -1,0 +1,21 @@
+@import "styles/colors.scss";
+@import "styles/media.scss";
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+    background: $gray;
+    padding: 2rem;
+    border-radius: 1rem;
+    position: relative;
+    @include mobile {
+        padding: 1rem;
+    }
+    input, label, ::placeholder {
+        @include mobile {
+            font-size: 0.8rem;
+        }
+    }    
+}

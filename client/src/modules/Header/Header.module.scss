@@ -1,0 +1,10 @@
+@import "styles/colors";
+
+.menu {
+    color: $primary;
+    svg {
+        fill: $primary;
+        width: 2rem;
+        height: 2rem;
+    }
+}
