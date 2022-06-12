@@ -30,6 +30,7 @@
     "rules": {
         "@typescript-eslint/ban-types": "off",
         "import/no-unresolved": "off",
+        "import/no-named-as-default": "off",
         "prettier/prettier":[
             "error",
             {"endOfLine": "auto"}
