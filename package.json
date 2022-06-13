@@ -41,6 +41,9 @@
   "prettier": {
     "printWidth": 100
   },
+  "engines": {
+    "node": "16.x"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
