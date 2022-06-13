@@ -7,7 +7,7 @@ import { buttonStyles, inputErrorStyles, inputLabelStyles, inputStyles } from ".
 import { AUTH_VALIDATION_SCHEMA } from "constants/validation";
 import { initialValues } from "./initialValues";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogin, authRegistration, errorMessageSelector, setErrorMessage } from "store/global";
+import { authLogin, errorMessageSelector, setErrorMessage } from "store/global";
 
 const FormAuthorization = () => {
   const dispatch = useDispatch();
@@ -17,23 +17,15 @@ const FormAuthorization = () => {
       dispatch(setErrorMessage(""));
     }
   };
-  const loginHandler = async (values: IValues) => {
-    await dispatch(authLogin(values));
-  };
-  const registrationHandler = async (values: IValues) => {
-    await dispatch(authRegistration(values));
-  };
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values: IValues) => {
-        await dispatch(authLogin(values));
-      }}
+      onSubmit={async (values: IValues) => await dispatch(authLogin(values))}
       validateOnBlur
       validationSchema={AUTH_VALIDATION_SCHEMA}
     >
-      {({ values, errors, touched, handleChange, isSubmitting }: IForm) => (
+      {({ values, errors, touched, handleSubmit, handleChange, isSubmitting }: IForm) => (
         <Form className={classes.form}>
           <>
             <TextField
@@ -104,20 +96,10 @@ const FormAuthorization = () => {
             className={classes.button}
             fullWidth
             disabled={isSubmitting}
-            onClick={() => loginHandler(values)}
+            onClick={handleSubmit}
             sx={buttonStyles}
           >
             Login
-          </Button>
-          <p>{`Haven't account yet?`}</p>
-          <Button
-            className={classes.button}
-            fullWidth
-            disabled={isSubmitting}
-            onClick={() => registrationHandler(values)}
-            sx={buttonStyles}
-          >
-            Registration
           </Button>
         </Form>
       )}
