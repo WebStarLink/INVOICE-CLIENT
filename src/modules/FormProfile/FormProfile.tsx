@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Form, Formik } from "formik";
-import { IValues, IForm } from "./interface";
+import { IForm, IProps } from "./interface";
 import { Button, TextField } from "@mui/material";
-import classes from "./FormAddClient.module.scss";
+import classes from "./FormProfile.module.scss";
 import {
   buttonStyles,
   calendarStyles,
@@ -10,49 +10,28 @@ import {
   inputLabelStyles,
   inputStyles,
 } from "./styles";
-import lottie from "lottie-web";
-import LottieSaveAnimation from "assets/lottie/saved-animation.json";
-import { useNavigate } from "react-router-dom";
-import { VALIDATION_SCHEMA } from "constants/validation";
+import { PROFILE_VALIDATION_SCHEMA, CLIENT_VALIDATION_SCHEMA } from "constants/validation";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { initialValues } from "./initialValues";
+import { IClient } from "interfaces";
 
-const FormAddClient = () => {
-  const element = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const [saveClient, setSaveClient] = useState(false);
-
-  useEffect(() => {
-    if (element.current) {
-      const saveClientAnimation = lottie.loadAnimation({
-        container: element.current,
-        renderer: "svg",
-        loop: false,
-        autoplay: true,
-        animationData: LottieSaveAnimation,
-      });
-      saveClientAnimation.addEventListener("complete", () => {
-        navigate("/");
-      });
-    }
-  }, [saveClient, navigate]);
-
+const FormProfile = ({ profile, onSubmit }: IProps) => {
   return (
     <Formik
-      initialValues={initialValues}
-      onSubmit={(values: IValues) => {
-        setSaveClient(true);
-        console.log(values);
+      initialValues={profile ? profile : initialValues}
+      onSubmit={(values: IClient) => {
+        onSubmit(values);
       }}
       validateOnBlur
-      validationSchema={VALIDATION_SCHEMA}
+      validationSchema={profile ? PROFILE_VALIDATION_SCHEMA : CLIENT_VALIDATION_SCHEMA}
     >
       {({
         values,
         errors,
         touched,
+        dirty,
         handleSubmit,
         handleChange,
         setFieldValue,
@@ -145,7 +124,6 @@ const FormAddClient = () => {
                 error={Boolean(touched.bank) && Boolean(errors.bank)}
                 onChange={handleChange}
                 disabled={isSubmitting}
-                inputProps={{ maxLength: 9 }}
                 InputProps={{
                   sx: inputStyles,
                 }}
@@ -211,123 +189,129 @@ const FormAddClient = () => {
                   width: "calc(50% - 5px)",
                 }}
               />
-              <TextField
-                id="noticea"
-                name="noticea"
-                label="Notice for invoice"
-                placeholder="Please leave a notice for invoice"
-                value={values.noticea}
-                helperText={touched.noticea && errors.noticea}
-                error={Boolean(touched.noticea) && Boolean(errors.noticea)}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                multiline
-                rows={2}
-                InputProps={{
-                  sx: inputStyles,
-                }}
-                InputLabelProps={{
-                  sx: inputLabelStyles,
-                }}
-                FormHelperTextProps={{
-                  sx: inputErrorStyles,
-                }}
-                sx={{
-                  marginBottom: "1rem",
-                  width: "calc(50% - 5px)",
-                }}
-              />
-              <TextField
-                id="noticeb"
-                name="noticeb"
-                label="Notice for completion"
-                placeholder="Please leave a notice for completion"
-                value={values.noticeb}
-                helperText={touched.noticeb && errors.noticeb}
-                error={Boolean(touched.noticeb) && Boolean(errors.noticeb)}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                multiline
-                rows={2}
-                InputProps={{
-                  sx: inputStyles,
-                }}
-                InputLabelProps={{
-                  sx: inputLabelStyles,
-                }}
-                FormHelperTextProps={{
-                  sx: inputErrorStyles,
-                }}
-                sx={{
-                  marginBottom: "1rem",
-                  width: "calc(50% - 5px)",
-                }}
-              />
-              <TextField
-                id="contract"
-                name="contract"
-                label="Contract"
-                placeholder="Contract name or number"
-                value={values.contract}
-                helperText={touched.contract && errors.contract}
-                error={Boolean(touched.contract) && Boolean(errors.contract)}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                InputProps={{
-                  sx: inputStyles,
-                }}
-                InputLabelProps={{
-                  sx: inputLabelStyles,
-                }}
-                FormHelperTextProps={{
-                  sx: inputErrorStyles,
-                }}
-                sx={{
-                  marginBottom: "1rem",
-                  width: "calc(50% - 5px)",
-                }}
-              />
+              {!profile && (
+                <>
+                  <TextField
+                    id="noticea"
+                    name="noticea"
+                    label="Notice for invoice"
+                    placeholder="Please leave a notice for invoice"
+                    value={values.noticea}
+                    helperText={touched.noticea && errors.noticea}
+                    error={Boolean(touched.noticea) && Boolean(errors.noticea)}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    multiline
+                    rows={2}
+                    InputProps={{
+                      sx: inputStyles,
+                    }}
+                    InputLabelProps={{
+                      sx: inputLabelStyles,
+                    }}
+                    FormHelperTextProps={{
+                      sx: inputErrorStyles,
+                    }}
+                    sx={{
+                      marginBottom: "1rem",
+                      width: "calc(50% - 5px)",
+                    }}
+                  />
 
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopDatePicker
-                  label="Contract date"
-                  inputFormat="dd/MM/yyyy"
-                  onChange={(value) => {
-                    value && setFieldValue("contractdate", value.toString());
-                    console.log(values.contractdate);
-                  }}
-                  value={values.contractdate}
-                  PaperProps={{
-                    sx: calendarStyles,
-                  }}
-                  InputAdornmentProps={{
-                    sx: {
-                      marginLeft: "0",
-                    },
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      className={classes.datepicker}
-                      id="contractdate"
-                      name={"contractdate"}
-                      helperText={touched.contractdate && errors.contractdate}
-                      error={Boolean(touched.contractdate) && Boolean(errors.contractdate)}
-                      disabled={isSubmitting}
-                      InputLabelProps={{
-                        sx: inputLabelStyles,
+                  <TextField
+                    id="noticeb"
+                    name="noticeb"
+                    label="Notice for completion"
+                    placeholder="Please leave a notice for completion"
+                    value={values.noticeb}
+                    helperText={touched.noticeb && errors.noticeb}
+                    error={Boolean(touched.noticeb) && Boolean(errors.noticeb)}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    multiline
+                    rows={2}
+                    InputProps={{
+                      sx: inputStyles,
+                    }}
+                    InputLabelProps={{
+                      sx: inputLabelStyles,
+                    }}
+                    FormHelperTextProps={{
+                      sx: inputErrorStyles,
+                    }}
+                    sx={{
+                      marginBottom: "1rem",
+                      width: "calc(50% - 5px)",
+                    }}
+                  />
+
+                  <TextField
+                    id="contract"
+                    name="contract"
+                    label="Contract"
+                    placeholder="Contract name or number"
+                    value={values.contract}
+                    helperText={touched.contract && errors.contract}
+                    error={Boolean(touched.contract) && Boolean(errors.contract)}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    InputProps={{
+                      sx: inputStyles,
+                    }}
+                    InputLabelProps={{
+                      sx: inputLabelStyles,
+                    }}
+                    FormHelperTextProps={{
+                      sx: inputErrorStyles,
+                    }}
+                    sx={{
+                      marginBottom: "1rem",
+                      width: "calc(50% - 5px)",
+                    }}
+                  />
+
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DesktopDatePicker
+                      label="Contract date"
+                      inputFormat="dd/MM/yyyy"
+                      onChange={(value) => {
+                        value && setFieldValue("contractdate", value.toString());
+                        console.log(values.contractdate);
                       }}
-                      FormHelperTextProps={{
-                        sx: inputErrorStyles,
+                      value={values.contractdate}
+                      PaperProps={{
+                        sx: calendarStyles,
                       }}
-                      sx={{
-                        marginBottom: "1rem",
-                        width: "calc(50% - 5px)",
+                      InputAdornmentProps={{
+                        sx: {
+                          marginLeft: "0",
+                        },
                       }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          className={classes.datepicker}
+                          id="contractdate"
+                          name={"contractdate"}
+                          helperText={touched.contractdate && errors.contractdate}
+                          error={Boolean(touched.contractdate) && Boolean(errors.contractdate)}
+                          disabled={isSubmitting}
+                          InputLabelProps={{
+                            sx: inputLabelStyles,
+                          }}
+                          FormHelperTextProps={{
+                            sx: inputErrorStyles,
+                          }}
+                          sx={{
+                            marginBottom: "1rem",
+                            width: "calc(50% - 5px)",
+                          }}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </LocalizationProvider>
+                  </LocalizationProvider>
+                </>
+              )}
               <TextField
                 fullWidth
                 type={"tel"}
@@ -360,13 +344,12 @@ const FormAddClient = () => {
             <Button
               className={classes.button}
               fullWidth
-              disabled={isSubmitting}
+              disabled={isSubmitting || !dirty}
               onClick={handleSubmit}
               sx={buttonStyles}
             >
               Save
             </Button>
-            {isSubmitting && <div className={classes.animation} ref={element} />}
           </Form>
         </>
       )}
@@ -374,4 +357,4 @@ const FormAddClient = () => {
   );
 };
 
-export default FormAddClient;
+export default FormProfile;
