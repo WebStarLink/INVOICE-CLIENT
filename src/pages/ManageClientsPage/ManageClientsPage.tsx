@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import classes from "./ManageClientsPage.module.scss";
 import { ReactComponent as SelectClientIcon } from "assets/icons/select-client.svg";
 import COLORS from "constants/colors";
-import { FormManageClient, TableManageClients } from "modules";
+import { FormProfile, TableManageClients } from "modules";
 import { IClient } from "./interface";
+import { IProfile } from "interfaces";
 
 const ManageClientsPage = () => {
   const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
   const handleSelectClient = (client: IClient) => {
     setSelectedClient(client);
   };
-  const handleCancelSelectClient = () => {
-    setSelectedClient(null);
-  };
 
-  console.log(selectedClient);
+  const saveClientHandler = (values: IProfile) => {
+    console.log(values);
+  };
 
   const tableData = [
     { id: 1, name: "AHello", text: "World", number: 2020, desctiption: "Code" },
@@ -39,10 +39,7 @@ const ManageClientsPage = () => {
             <h2 className={classes.clientCardTitle}>Please select a client for editing ...</h2>
           </>
         ) : (
-          <FormManageClient
-            selectedClient={selectedClient}
-            handleCancel={handleCancelSelectClient}
-          />
+          <FormProfile onSubmit={saveClientHandler} />
         )}
       </div>
     </div>

@@ -21,4 +21,25 @@
       font-size: 0.8rem;
     }
   }
+
+  textarea::-webkit-scrollbar {
+    @include mobile {
+      display: none;
+    }
+  }
+}
+
+.datepicker {
+  input {
+    padding: 9px 14px !important;
+    @include mobile {
+      padding: 9px 5px !important;
+    }
+  }
+
+  button {
+    @include mobile {
+      padding: 3px !important;
+    }
+  }
 }

@@ -3,14 +3,26 @@ export interface IAuth {
   password: string;
 }
 
-export interface IProfile {
-  legal: string;
-  itn: string;
-}
-
 export interface IUser {
   id: string;
   email: string;
   activationSuccessful: boolean;
   profile: IProfile;
+}
+
+export interface IProfile {
+  legal: string;
+  itn: string;
+  address: string;
+  iban: string;
+  bank: string;
+  bic: string;
+  phone: string;
+}
+
+export interface IClient extends IProfile {
+  noticea?: string;
+  noticeb?: string;
+  contract?: string;
+  contractdate?: Date;
 }
