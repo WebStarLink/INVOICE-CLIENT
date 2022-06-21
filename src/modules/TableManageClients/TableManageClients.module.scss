@@ -2,51 +2,55 @@
 @import "styles/media.scss";
 
 .tableContainer {
-    margin: auto;
-    background: $gray;
-    border-radius: 1rem;
-    margin-bottom: 2rem;
- }
- 
- .table {
-     thead th {
-         padding: 0.56rem;
-         @include mobile {
-             padding: 0.56rem;
-             font-size: 0.8rem;
-         }
-         background: $primary;
-         color: $white;
-         &:first-child{
-             padding-left: 2rem;
-             @include mobile {
-                 padding-left: 1rem;
-             }
-         }
-         &:last-child {
-             padding-right: 2rem;
-             @include mobile {
-                 padding-right: 1rem;
-             }
-         }
-     }
-     tbody td {
-         padding: 0.56rem;
-         @include mobile {
-             font-size: 0.8rem;
-         }
-         &:first-child{
-             padding-left: 2rem;
-             @include mobile {
-                 padding-left: 1rem;
-             }
-         }
-         &:last-child {
-             padding-right: 2rem;
-             @include mobile {
-                 padding-right: 1rem;
-             }
-             
-         }
-     }
- }
+  margin: auto;
+  margin-bottom: 2rem;
+  background: $gray;
+  border-radius: 1rem;
+}
+
+.table {
+  thead th {
+    padding: 0.56rem;
+    color: $white;
+    background: $primary;
+    @include mobile {
+      padding: 0.56rem;
+      font-size: 0.8rem;
+    }
+
+    &:first-child {
+      padding-left: 2rem;
+      @include mobile {
+        padding-left: 1rem;
+      }
+    }
+
+    &:last-child {
+      padding-right: 2rem;
+      @include mobile {
+        padding-right: 1rem;
+      }
+    }
+  }
+
+  tbody td {
+    padding: 0.56rem;
+    @include mobile {
+      font-size: 0.8rem;
+    }
+
+    &:first-child {
+      padding-left: 2rem;
+      @include mobile {
+        padding-left: 1rem;
+      }
+    }
+
+    &:last-child {
+      padding-right: 2rem;
+      @include mobile {
+        padding-right: 1rem;
+      }
+    }
+  }
+}
