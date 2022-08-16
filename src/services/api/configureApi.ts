@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const baseURL = `${process.env.REACT_APP_API_URL}`;
+const baseURL = process.env.REACT_APP_API_URL;
 
 export const checkAuth = {
   refreshToken: () => axios.get(`${baseURL}/refresh`, { withCredentials: true }),
