@@ -72,7 +72,7 @@ const FormAuthorization = () => {
               }
               onChange={handleChange}
               onInput={clearErrors}
-              disabled={isSubmitting}
+              disabled={isSubmitting || loading === STATUSES.LOADING}
               InputProps={{
                 sx: inputStyles,
               }}
@@ -104,7 +104,7 @@ const FormAuthorization = () => {
               }
               onChange={handleChange}
               onInput={clearErrors}
-              disabled={isSubmitting}
+              disabled={isSubmitting || loading === STATUSES.LOADING}
               InputProps={{
                 sx: inputStyles,
               }}
@@ -122,7 +122,7 @@ const FormAuthorization = () => {
           <Button
             className={classes.button}
             fullWidth
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading === STATUSES.LOADING}
             onClick={handleSubmit}
             sx={buttonStyles}
           >

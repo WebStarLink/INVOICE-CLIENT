@@ -6,13 +6,12 @@ import { updateProfile, userResponseSelector } from "store/global";
 import classes from "./ProfilePage.module.scss";
 
 const ProfilePage = () => {
-  const user = useSelector(userResponseSelector);
   const dispatch = useDispatch();
+  const user = useSelector(userResponseSelector);
   const profile = user?.profile;
+
   const saveProfileHandler = (values: IProfile) => {
     dispatch(updateProfile(values));
-
-    console.log(values);
   };
 
   return (
