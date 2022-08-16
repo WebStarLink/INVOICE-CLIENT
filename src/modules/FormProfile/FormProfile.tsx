@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { IForm, IProps } from "./interface";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import classes from "./FormProfile.module.scss";
 import {
   buttonStyles,
@@ -16,8 +16,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { initialValues } from "./initialValues";
 import { IClient } from "interfaces";
+import STATUSES from "constants/statuses";
+import COLORS from "constants/colors";
+import { useSelector } from "react-redux";
+import { loadingStatusSelector } from "store/global";
 
 const FormProfile = ({ profile, onSubmit }: IProps) => {
+  const loading = useSelector(loadingStatusSelector);
+
   return (
     <Formik
       initialValues={profile ? profile : initialValues}
@@ -350,6 +356,21 @@ const FormProfile = ({ profile, onSubmit }: IProps) => {
             >
               Save
             </Button>
+            {loading === STATUSES.LOADING && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  color: "#000",
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                <CircularProgress sx={{ color: COLORS.LIGHTGRAY }} />
+              </Box>
+            )}
           </Form>
         </>
       )}
