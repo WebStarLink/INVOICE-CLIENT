@@ -33,28 +33,24 @@ const TableManageClients = ({ data, onClick }: ITableData) => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Text</TableCell>
-            <TableCell>Number</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell>TAX</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
-          ).map((row) => (
+          ).map((row, id) => (
             <TableRow
-              key={row.id}
+              key={id}
               onClick={() => onClick(row)}
               hover
               sx={{
                 cursor: "pointer",
               }}
             >
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.text}</TableCell>
-              <TableCell>{row.number}</TableCell>
-              <TableCell>{row.desctiption}</TableCell>
+              <TableCell>{row.legal}</TableCell>
+              <TableCell>{row.itn}</TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (

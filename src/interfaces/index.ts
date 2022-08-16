@@ -25,4 +25,5 @@ export interface IClient extends IProfile {
   noticeb?: string;
   contract?: string;
   contractdate?: Date;
+  owner?: string;
 }
