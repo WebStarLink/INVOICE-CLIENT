@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import { IForm, IProps } from "./interface";
 import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import classes from "./FormProfile.module.scss";
+import classNames from "classnames";
 import {
   buttonStyles,
   calendarStyles,
@@ -44,7 +45,11 @@ const FormProfile = ({ profile, onSubmit }: IProps) => {
         isSubmitting,
       }: IForm) => (
         <>
-          <Form className={classes.form}>
+          <Form
+            className={classNames(classes.form, {
+              [classes.loading]: loading === STATUSES.LOADING,
+            })}
+          >
             <>
               <TextField
                 fullWidth
