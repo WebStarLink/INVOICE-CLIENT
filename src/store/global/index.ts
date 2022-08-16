@@ -1,10 +1,11 @@
 import { getRequests } from "services/api/getRequests";
-import { IAuth } from "interfaces";
+import { IAuth, IProfile } from "interfaces";
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
 import { postRequests } from "services/api/postRequests";
 import STATUSES from "constants/statuses";
 import { checkAuth } from "services/api/configureApi";
+import { putRequests } from "services/api/putRequests";
 
 const initialState: IGlobalStore = {
   user: null,
@@ -32,6 +33,10 @@ export const authLogout = createAsyncThunk("auth/logout", async () => {
 });
 export const getClients = createAsyncThunk("clients/getClients", async () => {
   const response = await getRequests.getUsers();
+  return response.data;
+});
+export const updateProfile = createAsyncThunk("profile/updateProfile", async (body: IProfile) => {
+  const response = await putRequests.profile(body);
   return response.data;
 });
 
@@ -106,6 +111,17 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.DONE;
     });
     builder.addCase(getClients.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+    builder.addCase(updateProfile.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });

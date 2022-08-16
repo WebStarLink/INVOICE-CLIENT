@@ -4,17 +4,18 @@ import STATUSES from "constants/statuses";
 import { IProfile } from "interfaces";
 import { FormAuthorization, FormProfile } from "modules";
 import React from "react";
-import { useSelector } from "react-redux";
-import { putRequests } from "services/api/putRequests";
-import { loadingStatusSelector, userResponseSelector } from "store/global";
+import { useDispatch, useSelector } from "react-redux";
+import { loadingStatusSelector, updateProfile, userResponseSelector } from "store/global";
 import classes from "./ProfilePage.module.scss";
 
 const ProfilePage = () => {
   const user = useSelector(userResponseSelector);
   const loading = useSelector(loadingStatusSelector);
+  const dispatch = useDispatch();
   const profile = user?.profile;
   const saveProfileHandler = (values: IProfile) => {
-    putRequests.profile(values);
+    dispatch(updateProfile(values));
+
     console.log(values);
   };
 
