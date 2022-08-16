@@ -364,7 +364,7 @@ const FormProfile = ({ profile, onSubmit }: IProps) => {
             </Button>
             {loading === STATUSES.LOADING && (
               <Box sx={loaderStyles}>
-                <CircularProgress sx={{ color: COLORS.LIGHTGRAY }} />
+                <CircularProgress sx={{ color: COLORS.PRIMARY }} />
               </Box>
             )}
           </Form>
