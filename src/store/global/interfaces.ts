@@ -1,8 +1,8 @@
-import { IUser } from "interfaces";
+import { IClient, IUser } from "interfaces";
 
 export interface IGlobalStore {
   user: IUser | null;
-  client: any;
+  clients: IClient[] | null;
   status: string;
   success: string;
   error: undefined | string;

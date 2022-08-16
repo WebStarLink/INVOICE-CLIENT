@@ -9,7 +9,7 @@ import { putRequests } from "services/api/putRequests";
 
 const initialState: IGlobalStore = {
   user: null,
-  client: [],
+  clients: null,
   status: "",
   success: "",
   error: "",
@@ -32,7 +32,7 @@ export const authLogout = createAsyncThunk("auth/logout", async () => {
   return response.data;
 });
 export const getClients = createAsyncThunk("clients/getClients", async () => {
-  const response = await getRequests.getUsers();
+  const response = await getRequests.getClients();
   return response.data;
 });
 export const updateProfile = createAsyncThunk("profile/updateProfile", async (body: IProfile) => {
@@ -107,7 +107,7 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.LOADING;
     });
     builder.addCase(getClients.fulfilled, (state, action) => {
-      state.client.push(action.payload);
+      state.clients = action.payload;
       state.status = STATUSES.DONE;
     });
     builder.addCase(getClients.rejected, (state, action) => {
@@ -136,9 +136,9 @@ export const userResponseSelector = createDraftSafeSelector(
   globalSelector,
   (global) => global.user
 );
-export const clientResponseSelector = createDraftSafeSelector(
+export const clientsResponseSelector = createDraftSafeSelector(
   globalSelector,
-  (global) => global.client
+  (global) => global.clients
 );
 export const loadingStatusSelector = createDraftSafeSelector(
   globalSelector,
