@@ -8,9 +8,12 @@ import { AUTH_VALIDATION_SCHEMA } from "constants/validation";
 import { initialValues } from "./initialValues";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin, errorMessageSelector, setErrorMessage } from "store/global";
+import { useNavigate } from "react-router-dom";
+import STATUSES from "constants/statuses";
 
 const FormAuthorization = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const errorMessages = useSelector(errorMessageSelector);
   const clearErrors = () => {
     if (errorMessages) {
@@ -21,7 +24,12 @@ const FormAuthorization = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values: IValues) => await dispatch(authLogin(values))}
+      onSubmit={async (values: IValues) => {
+        await dispatch(authLogin(values));
+        if (STATUSES.DONE) {
+          navigate("/profile");
+        }
+      }}
       validateOnBlur
       validationSchema={AUTH_VALIDATION_SCHEMA}
     >
