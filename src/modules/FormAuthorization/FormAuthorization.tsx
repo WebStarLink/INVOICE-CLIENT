@@ -1,20 +1,35 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { IValues, IForm } from "./interface";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import classes from "./FormAuthorization.module.scss";
-import { buttonStyles, inputErrorStyles, inputLabelStyles, inputStyles } from "./styles";
+import {
+  buttonStyles,
+  inputErrorStyles,
+  inputLabelStyles,
+  inputStyles,
+  loaderStyles,
+} from "./styles";
 import { AUTH_VALIDATION_SCHEMA } from "constants/validation";
 import { initialValues } from "./initialValues";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogin, errorMessageSelector, setErrorMessage } from "store/global";
+import {
+  authLogin,
+  errorMessageSelector,
+  loadingStatusSelector,
+  setErrorMessage,
+} from "store/global";
 import { useNavigate } from "react-router-dom";
 import STATUSES from "constants/statuses";
+import COLORS from "constants/colors";
+import classNames from "classnames";
 
 const FormAuthorization = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const errorMessages = useSelector(errorMessageSelector);
+  const loading = useSelector(loadingStatusSelector);
+
   const clearErrors = () => {
     if (errorMessages) {
       dispatch(setErrorMessage(""));
@@ -34,7 +49,11 @@ const FormAuthorization = () => {
       validationSchema={AUTH_VALIDATION_SCHEMA}
     >
       {({ values, errors, touched, handleSubmit, handleChange, isSubmitting }: IForm) => (
-        <Form className={classes.form}>
+        <Form
+          className={classNames(classes.form, {
+            [classes.loading]: loading === STATUSES.LOADING,
+          })}
+        >
           <>
             <TextField
               fullWidth
@@ -109,6 +128,11 @@ const FormAuthorization = () => {
           >
             Login
           </Button>
+          {loading === STATUSES.LOADING && (
+            <Box sx={loaderStyles}>
+              <CircularProgress sx={{ color: COLORS.LIGHTGRAY }} />
+            </Box>
+          )}
         </Form>
       )}
     </Formik>

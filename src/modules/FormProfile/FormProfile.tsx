@@ -10,6 +10,7 @@ import {
   inputErrorStyles,
   inputLabelStyles,
   inputStyles,
+  loaderStyles,
 } from "./styles";
 import { PROFILE_VALIDATION_SCHEMA, CLIENT_VALIDATION_SCHEMA } from "constants/validation";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -362,17 +363,7 @@ const FormProfile = ({ profile, onSubmit }: IProps) => {
               Save
             </Button>
             {loading === STATUSES.LOADING && (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  color: "#000",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
-              >
+              <Box sx={loaderStyles}>
                 <CircularProgress sx={{ color: COLORS.LIGHTGRAY }} />
               </Box>
             )}
