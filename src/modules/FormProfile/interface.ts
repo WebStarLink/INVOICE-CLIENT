@@ -2,7 +2,8 @@ import { IClient, IProfile } from "interfaces";
 
 export interface IProps {
   profile?: IProfile;
-  onSubmit: (values: IClient) => void;
+  client?: IClient;
+  onSubmit: (values: IProfile | IClient) => void;
 }
 
 export interface IForm {

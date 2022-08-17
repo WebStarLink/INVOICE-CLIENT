@@ -42,7 +42,7 @@ const ManageClientsPage = () => {
             <h2 className={classes.clientCardTitle}>Please select a client for editing ...</h2>
           </>
         ) : (
-          <FormProfile onSubmit={saveClientHandler} profile={selectedClient} />
+          <FormProfile onSubmit={saveClientHandler} client={selectedClient} />
         )}
       </div>
     </div>
