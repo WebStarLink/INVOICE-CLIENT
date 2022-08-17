@@ -34,6 +34,7 @@ const FormProfile = ({ profile, onSubmit }: IProps) => {
       }}
       validateOnBlur
       validationSchema={profile ? PROFILE_VALIDATION_SCHEMA : CLIENT_VALIDATION_SCHEMA}
+      enableReinitialize
     >
       {({
         values,
