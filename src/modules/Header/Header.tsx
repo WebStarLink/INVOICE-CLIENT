@@ -51,14 +51,14 @@ const Header = () => {
   };
 
   const handleLogoNavigate = () => {
-    navigate("/");
+    navigate(ROUTES.HOME);
   };
 
   const handleAddNewClientNavigate = () => {
     handleCloseControlMenu();
     navigate(ROUTES.ADD_CLIENT);
   };
-  const handleAddManageClientsNavigate = () => {
+  const handleManageClientsNavigate = () => {
     handleCloseControlMenu();
     navigate(ROUTES.CLIENTS);
   };
@@ -85,6 +85,7 @@ const Header = () => {
   const logoutHandler = async () => {
     await dispatch(authLogout());
     handleCloseConfirmLogout();
+    navigate(ROUTES.HOME);
   };
 
   return (
@@ -120,7 +121,7 @@ const Header = () => {
               </ListItemIcon>
               Add new client
             </MenuItem>
-            <MenuItem onClick={handleAddManageClientsNavigate}>
+            <MenuItem onClick={handleManageClientsNavigate}>
               <ListItemIcon>
                 <ManageClientsIcon width={20} height={20} />
               </ListItemIcon>

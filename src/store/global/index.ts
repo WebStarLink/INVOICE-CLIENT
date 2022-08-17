@@ -29,6 +29,7 @@ export const authRegistration = createAsyncThunk("auth/registration", async (bod
 });
 export const authLogout = createAsyncThunk("auth/logout", async () => {
   const response = await postRequests.logout();
+
   return response.data;
 });
 
@@ -60,44 +61,6 @@ export const globalResponseSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(authLogin.pending, (state) => {
-      state.status = STATUSES.LOADING;
-    });
-    builder.addCase(authLogin.fulfilled, (state, action) => {
-      console.log("AUTH LOGIN", action.payload);
-
-      state.user = action.payload.user;
-      localStorage.setItem("token", action.payload.accessToken);
-      state.status = STATUSES.DONE;
-    });
-    builder.addCase(authLogin.rejected, (state, action) => {
-      state.status = STATUSES.ERROR;
-      state.error = action.error.message;
-    });
-    builder.addCase(authCheck.pending, (state) => {
-      state.status = STATUSES.LOADING;
-    });
-    builder.addCase(authCheck.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-      localStorage.setItem("token", action.payload.accessToken);
-      state.status = STATUSES.DONE;
-    });
-    builder.addCase(authCheck.rejected, (state, action) => {
-      state.status = STATUSES.ERROR;
-      state.error = action.error.message;
-    });
-    builder.addCase(authLogout.pending, (state) => {
-      state.status = STATUSES.LOADING;
-    });
-    builder.addCase(authLogout.fulfilled, (state) => {
-      state.user = null;
-      localStorage.removeItem("token");
-      state.status = STATUSES.DONE;
-    });
-    builder.addCase(authLogout.rejected, (state, action) => {
-      state.status = STATUSES.ERROR;
-      state.error = action.error.message;
-    });
     builder.addCase(authRegistration.pending, (state) => {
       state.status = STATUSES.LOADING;
     });
@@ -110,6 +73,47 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
+
+    builder.addCase(authLogin.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(authLogin.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.accessToken);
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(authLogin.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(authLogout.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(authLogout.fulfilled, (state) => {
+      state.user = null;
+      state.clients = null;
+      localStorage.removeItem("token");
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(authLogout.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(authCheck.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(authCheck.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.accessToken);
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(authCheck.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+
     builder.addCase(updateProfile.pending, (state) => {
       state.status = STATUSES.LOADING;
     });
@@ -147,9 +151,9 @@ export const globalResponseSlice = createSlice({
   },
 });
 
-export const { setSuccessMessage, setErrorMessage } = globalResponseSlice.actions;
-
 const globalSelector = (state: IGlobalStoreSelector) => state.globalStore;
+
+export const { setSuccessMessage, setErrorMessage } = globalResponseSlice.actions;
 
 export const userResponseSelector = createDraftSafeSelector(
   globalSelector,
