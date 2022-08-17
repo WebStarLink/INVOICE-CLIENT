@@ -1,5 +1,5 @@
 import { getRequests } from "services/api/getRequests";
-import { IAuth, IProfile } from "interfaces";
+import { IAuth, IClient, IProfile } from "interfaces";
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IGlobalStore, IGlobalStoreSelector } from "./interfaces";
 import { postRequests } from "services/api/postRequests";
@@ -31,12 +31,19 @@ export const authLogout = createAsyncThunk("auth/logout", async () => {
   const response = await postRequests.logout();
   return response.data;
 });
+
+export const updateProfile = createAsyncThunk("profile/updateProfile", async (body: IProfile) => {
+  const response = await putRequests.profile(body);
+  return response.data;
+});
+
 export const getClients = createAsyncThunk("clients/getClients", async () => {
   const response = await getRequests.getClients();
   return response.data;
 });
-export const updateProfile = createAsyncThunk("profile/updateProfile", async (body: IProfile) => {
-  const response = await putRequests.profile(body);
+
+export const createClient = createAsyncThunk("clients/createClient", async (body: IClient) => {
+  const response = await postRequests.client(body);
   return response.data;
 });
 
@@ -103,6 +110,17 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
+    builder.addCase(updateProfile.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
     builder.addCase(getClients.pending, (state) => {
       state.status = STATUSES.LOADING;
     });
@@ -114,14 +132,15 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
-    builder.addCase(updateProfile.pending, (state) => {
+
+    builder.addCase(createClient.pending, (state) => {
       state.status = STATUSES.LOADING;
     });
-    builder.addCase(updateProfile.fulfilled, (state, action) => {
-      state.user = action.payload;
+    builder.addCase(createClient.fulfilled, (state, action) => {
+      state.clients?.push({ ...action.payload, owner: state.user?.id });
       state.status = STATUSES.DONE;
     });
-    builder.addCase(updateProfile.rejected, (state, action) => {
+    builder.addCase(createClient.rejected, (state, action) => {
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });
