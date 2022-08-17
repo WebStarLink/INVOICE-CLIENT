@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import STATUSES from "constants/statuses";
 import COLORS from "constants/colors";
 import classNames from "classnames";
+import { ROUTES } from "constants/routes";
 
 const FormAuthorization = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const FormAuthorization = () => {
       onSubmit={async (values: IValues) => {
         await dispatch(authLogin(values));
         if (STATUSES.DONE) {
-          navigate("/profile");
+          navigate(ROUTES.PROFILE);
         }
       }}
       validateOnBlur
