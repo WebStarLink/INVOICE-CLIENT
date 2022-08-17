@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./ManageClientsPage.module.scss";
-// import { ReactComponent as SelectClientIcon } from "assets/icons/select-client.svg";
-// import COLORS from "constants/colors";
-import { TableManageClients } from "modules";
-// import { IClient } from "./interface";
+import { ReactComponent as SelectClientIcon } from "assets/icons/select-client.svg";
+import COLORS from "constants/colors";
+import { FormProfile, TableManageClients } from "modules";
+import { IClient } from "interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { clientsResponseSelector, getClients } from "store/global";
 
 const ManageClientsPage = () => {
-  //   const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
+  const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
   const dispatch = useDispatch();
   const clients = useSelector(clientsResponseSelector);
-  //   const handleSelectClient = (client: IClient) => {
-  //     setSelectedClient(client);
-  //   };
+  const handleSelectClient = (client: IClient) => {
+    setSelectedClient(client);
+  };
 
-  //   const saveClientHandler = (values: IClient) => {
-  //     console.log(values);
-  //   };
+  const saveClientHandler = (values: IClient) => {
+    console.log(values);
+  };
 
   useEffect(() => {
     dispatch(getClients());
@@ -27,20 +27,20 @@ const ManageClientsPage = () => {
     <div className={classes.wrapper}>
       <h1>Manage Clients</h1>
       {clients ? (
-        <TableManageClients data={clients} onClick={() => console.log("Click")} />
+        <TableManageClients data={clients} onClick={handleSelectClient} />
       ) : (
         <div>Empty</div>
       )}
 
       <div className={classes.clientCard}>
-        {/* {!selectedClient ? (
+        {!selectedClient ? (
           <>
             <SelectClientIcon width={100} height={100} fill={COLORS.PRIMARY} />
             <h2 className={classes.clientCardTitle}>Please select a client for editing ...</h2>
           </>
         ) : (
-          <FormProfile onSubmit={saveClientHandler} />
-        )} */}
+          <FormProfile onSubmit={saveClientHandler} profile={selectedClient} />
+        )}
       </div>
     </div>
   );
