@@ -23,7 +23,7 @@ import COLORS from "constants/colors";
 import { useSelector } from "react-redux";
 import { loadingStatusSelector } from "store/global";
 
-const FormProfile = ({ profile, client, onSubmit }: IProps) => {
+const FormProfile = ({ profile, onSubmit }: IProps) => {
   const loading = useSelector(loadingStatusSelector);
 
   return (
@@ -203,7 +203,7 @@ const FormProfile = ({ profile, client, onSubmit }: IProps) => {
                 }}
               />
               {!profile ||
-                (client && (
+                (profile.owner && (
                   <>
                     <TextField
                       id="noticea"
