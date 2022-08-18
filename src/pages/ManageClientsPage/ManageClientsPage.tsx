@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./ManageClientsPage.module.scss";
 import { ReactComponent as SelectClientIcon } from "assets/icons/select-client.svg";
 import COLORS from "constants/colors";
-import { FormProfile, TableManageClients } from "modules";
+import { FormClient, TableManageClients } from "modules";
 import { IClient } from "interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { clientsResponseSelector, getClients } from "store/global";
@@ -42,7 +42,7 @@ const ManageClientsPage = () => {
             <h2 className={classes.clientCardTitle}>Please select a client for editing ...</h2>
           </>
         ) : (
-          <FormProfile onSubmit={saveClientHandler} profile={selectedClient} />
+          <FormClient onSubmit={saveClientHandler} client={selectedClient} />
         )}
       </div>
     </div>

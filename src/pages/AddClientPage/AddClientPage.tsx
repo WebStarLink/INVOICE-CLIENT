@@ -1,5 +1,5 @@
 import { IProfile } from "interfaces";
-import { FormProfile } from "modules";
+import { FormClient } from "modules";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clientsResponseSelector, createClient, getClients } from "store/global";
@@ -19,7 +19,7 @@ const AddClientPage = () => {
   return (
     <div className={classes.wrapper}>
       <h1>Add client</h1>
-      <FormProfile onSubmit={saveClientHandler} />
+      <FormClient onSubmit={saveClientHandler} />
     </div>
   );
 };

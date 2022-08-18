@@ -1,14 +1,14 @@
-import { IProfile } from "interfaces";
+import { IClient } from "interfaces";
 
 export interface IProps {
-  profile?: IProfile;
-  onSubmit: (values: IProfile) => void;
+  client?: IClient;
+  onSubmit: (values: IClient) => void;
 }
 
 export interface IForm {
-  values: IProfile;
-  errors: IProfile;
-  touched: IProfile;
+  values: IClient;
+  errors: IClient;
+  touched: IClient;
   dirty: boolean;
   handleSubmit: () => void;
   handleChange: () => void;
