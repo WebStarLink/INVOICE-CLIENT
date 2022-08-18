@@ -37,9 +37,7 @@ instance.interceptors.response.use(
         const response = await checkAuth.refreshToken();
         localStorage.setItem("token", response.data.accessToken);
         return instance.request(originalRequest);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
     return Promise.reject(error.response.data);
   }

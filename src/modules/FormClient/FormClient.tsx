@@ -36,7 +36,6 @@ const FormClient = ({ client, onSubmit, onRemove }: IProps) => {
   const loading = useSelector(loadingStatusSelector);
   const dispatch = useDispatch();
   const [openConfirm, setOpenConfirm] = useState(false);
-  console.log("formClient client", client);
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -317,7 +316,6 @@ const FormClient = ({ client, onSubmit, onRemove }: IProps) => {
                     inputFormat="dd/MM/yyyy"
                     onChange={(value) => {
                       value && setFieldValue("contractdate", value.toString());
-                      console.log(values.contractdate);
                     }}
                     value={values.contractdate}
                     PaperProps={{
