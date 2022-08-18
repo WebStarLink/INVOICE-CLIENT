@@ -15,6 +15,9 @@ const ManageClientsPage = () => {
   const handleSelectClient = (client: IClient) => {
     setSelectedClient(client);
   };
+  const handleUnselectClient = () => {
+    setSelectedClient(null);
+  };
 
   const saveClientHandler = (values: IClient) => {
     console.log(values);
@@ -42,7 +45,11 @@ const ManageClientsPage = () => {
             <h2 className={classes.clientCardTitle}>Please select a client for editing ...</h2>
           </>
         ) : (
-          <FormClient onSubmit={saveClientHandler} client={selectedClient} />
+          <FormClient
+            onSubmit={saveClientHandler}
+            client={selectedClient}
+            onRemove={handleUnselectClient}
+          />
         )}
       </div>
     </div>

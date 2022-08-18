@@ -21,6 +21,7 @@ export interface IProfile {
 }
 
 export interface IClient extends IProfile {
+  _id?: string;
   noticea?: string;
   noticeb?: string;
   contract?: string;

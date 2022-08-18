@@ -3,6 +3,7 @@ import { IClient } from "interfaces";
 export interface IProps {
   client?: IClient;
   onSubmit: (values: IClient) => void;
+  onRemove?: () => void;
 }
 
 export interface IForm {
