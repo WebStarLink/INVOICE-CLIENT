@@ -360,9 +360,8 @@ const FormClient = ({ client, onSubmit }: IProps) => {
               <Button
                 className={classes.submit}
                 disabled={isSubmitting || !dirty}
-                fullWidth={client ? true : false}
                 onClick={handleSubmit}
-                sx={buttonSubmitStyles}
+                sx={{ ...buttonSubmitStyles, width: client ? "90%" : "100%" }}
               >
                 Save
               </Button>

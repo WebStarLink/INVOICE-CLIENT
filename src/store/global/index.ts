@@ -6,6 +6,7 @@ import { postRequests } from "services/api/postRequests";
 import STATUSES from "constants/statuses";
 import { checkAuth } from "services/api/configureApi";
 import { putRequests } from "services/api/putRequests";
+import { deleteRequests } from "services/api/deleteRequests";
 
 const initialState: IGlobalStore = {
   user: null,
@@ -45,6 +46,10 @@ export const getClients = createAsyncThunk("clients/getClients", async () => {
 
 export const createClient = createAsyncThunk("clients/createClient", async (body: IClient) => {
   const response = await postRequests.client(body);
+  return response.data;
+});
+export const removeClient = createAsyncThunk("clients/removeClient", async (id: string) => {
+  const response = await deleteRequests.remove(id);
   return response.data;
 });
 
@@ -145,6 +150,20 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.DONE;
     });
     builder.addCase(createClient.rejected, (state, action) => {
+      state.status = STATUSES.ERROR;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(removeClient.pending, (state) => {
+      state.status = STATUSES.LOADING;
+    });
+    builder.addCase(removeClient.fulfilled, (state, action) => {
+      console.log(state);
+      console.log(action);
+
+      state.status = STATUSES.DONE;
+    });
+    builder.addCase(removeClient.rejected, (state, action) => {
       state.status = STATUSES.ERROR;
       state.error = action.error.message;
     });

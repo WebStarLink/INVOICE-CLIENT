@@ -39,7 +39,6 @@ export const inputErrorStyles = {
 export const buttonSubmitStyles = {
   color: COLORS.WHITE,
   background: COLORS.PRIMARY,
-  width: "90%",
   "&:hover": {
     color: COLORS.PRIMARY,
   },
@@ -47,7 +46,7 @@ export const buttonSubmitStyles = {
 export const buttonRemoveStyles = {
   color: COLORS.PRIMARY,
   background: COLORS.WHITE,
-  width: "90%",
+  width: "10%",
   "&:hover": {
     color: COLORS.WHITE,
     background: COLORS.PRIMARY,
