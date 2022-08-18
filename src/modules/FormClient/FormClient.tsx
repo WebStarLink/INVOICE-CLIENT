@@ -27,7 +27,7 @@ import { loadingStatusSelector } from "store/global";
 const FormClient = ({ client, onSubmit }: IProps) => {
   const loading = useSelector(loadingStatusSelector);
 
-  const handleRemove = (event: any) => {
+  const handleRemove = (event: React.MouseEvent) => {
     console.log(event);
   };
 
