@@ -24,7 +24,7 @@ const FormProfile = ({ profile, onSubmit }: IProps) => {
 
   return (
     <Formik
-      initialValues={profile ? profile : initialValues}
+      initialValues={profile?.legal ? profile : initialValues}
       onSubmit={(values: IProfile) => {
         onSubmit(values);
       }}

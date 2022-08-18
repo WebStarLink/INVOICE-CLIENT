@@ -158,9 +158,10 @@ export const globalResponseSlice = createSlice({
       state.status = STATUSES.LOADING;
     });
     builder.addCase(removeClient.fulfilled, (state, action) => {
-      console.log(state);
-      console.log(action);
-
+      const index = state.clients?.findIndex((client) => client._id === action.meta.arg);
+      if (index) {
+        state.clients?.splice(index, 1);
+      }
       state.status = STATUSES.DONE;
     });
     builder.addCase(removeClient.rejected, (state, action) => {
