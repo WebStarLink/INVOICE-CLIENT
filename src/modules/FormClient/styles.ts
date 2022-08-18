@@ -44,6 +44,14 @@ export const buttonStyles = {
   },
 };
 
+export const calendarStyles = {
+  button: {
+    "&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:focus": {
+      background: COLORS.PRIMARY,
+    },
+  },
+};
+
 export const loaderStyles = {
   display: "flex",
   justifyContent: "center",
