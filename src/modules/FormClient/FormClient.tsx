@@ -5,7 +5,8 @@ import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import classes from "./FormClient.module.scss";
 import classNames from "classnames";
 import {
-  buttonStyles,
+  buttonRemoveStyles,
+  buttonSubmitStyles,
   calendarStyles,
   inputErrorStyles,
   inputLabelStyles,
@@ -25,6 +26,10 @@ import { loadingStatusSelector } from "store/global";
 
 const FormClient = ({ client, onSubmit }: IProps) => {
   const loading = useSelector(loadingStatusSelector);
+
+  const handleRemove = (event: any) => {
+    console.log(event);
+  };
 
   return (
     <Formik
@@ -351,15 +356,28 @@ const FormClient = ({ client, onSubmit }: IProps) => {
                 }}
               />
             </>
-            <Button
-              className={classes.button}
-              fullWidth
-              disabled={isSubmitting || !dirty}
-              onClick={handleSubmit}
-              sx={buttonStyles}
-            >
-              Save
-            </Button>
+            <div className={classes.controls}>
+              <Button
+                className={classes.submit}
+                disabled={isSubmitting || !dirty}
+                fullWidth={client ? true : false}
+                onClick={handleSubmit}
+                sx={buttonSubmitStyles}
+              >
+                Save
+              </Button>
+              {client && (
+                <Button
+                  className={classes.remove}
+                  disabled={isSubmitting || !dirty}
+                  onClick={handleRemove}
+                  sx={buttonRemoveStyles}
+                >
+                  X
+                </Button>
+              )}
+            </div>
+
             {loading === STATUSES.LOADING && (
               <Box sx={loaderStyles}>
                 <CircularProgress sx={{ color: COLORS.PRIMARY }} />

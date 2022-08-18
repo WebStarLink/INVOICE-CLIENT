@@ -36,11 +36,21 @@ export const inputErrorStyles = {
   color: COLORS.WARNING,
 };
 
-export const buttonStyles = {
+export const buttonSubmitStyles = {
   color: COLORS.WHITE,
   background: COLORS.PRIMARY,
+  width: "90%",
   "&:hover": {
     color: COLORS.PRIMARY,
+  },
+};
+export const buttonRemoveStyles = {
+  color: COLORS.PRIMARY,
+  background: COLORS.WHITE,
+  width: "90%",
+  "&:hover": {
+    color: COLORS.WHITE,
+    background: COLORS.PRIMARY,
   },
 };
 
